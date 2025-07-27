@@ -1,0 +1,53 @@
+body {
+  background-color: #f4f7f9;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+}
+
+.full-dashboard {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.analytics-container {
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  background-color: #ffffff;
+  padding: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.chart-title {
+  text-align: center;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #333;
+  margin-top: 0;
+  margin-bottom: 25px;
+}
+
+.column-charts-area {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.status-message {
+  padding: 40px;
+  text-align: center;
+  font-size: 1.2em;
+  color: #555;
+}
+
+.status-message.error {
+  color: red;
+}
+
+/* Responsive cho màn hình nhỏ */
+@media (max-width: 900px) {
+  .column-charts-area {
+    grid-template-columns: 1fr; /* Chuyển thành 1 cột duy nhất */
+  }
+}
