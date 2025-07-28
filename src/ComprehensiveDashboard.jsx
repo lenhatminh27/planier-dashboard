@@ -48,8 +48,8 @@ const ComprehensiveDashboard = () => {
       // Sử dụng Promise.allSettled để không bị dừng lại nếu một API lỗi
       const results = await Promise.allSettled([
         fetch("/data.xlsx"),
-        fetch("http://103.90.224.182/server/statistic"),
-        fetch("http://103.90.224.182/server/revenue"),
+        fetch("/api/statistic"),
+        fetch("/api/revenue"),
       ])
 
       const newErrors = []
