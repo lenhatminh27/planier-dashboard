@@ -1,0 +1,111 @@
+{
+  "data": {
+    "filterYear": 2025,
+    "totalUsers": 90,
+    "totalPrice": 36513000,
+    "userGrowthOverTime": {
+      "dataPoints": [
+        {
+          "month": "JANUARY",
+          "totalUsers": 0
+        },
+        {
+          "month": "FEBRUARY",
+          "totalUsers": 0
+        },
+        {
+          "month": "MARCH",
+          "totalUsers": 0
+        },
+        {
+          "month": "APRIL",
+          "totalUsers": 0
+        },
+        {
+          "month": "MAY",
+          "totalUsers": 0
+        },
+        {
+          "month": "JUNE",
+          "totalUsers": 8
+        },
+        {
+          "month": "JULY",
+          "totalUsers": 82
+        },
+        {
+          "month": "AUGUST",
+          "totalUsers": 0
+        },
+        {
+          "month": "SEPTEMBER",
+          "totalUsers": 0
+        },
+        {
+          "month": "OCTOBER",
+          "totalUsers": 0
+        },
+        {
+          "month": "NOVEMBER",
+          "totalUsers": 0
+        },
+        {
+          "month": "DECEMBER",
+          "totalUsers": 0
+        }
+      ]
+    },
+    "totalRevenue": {
+      "dataPoints": [
+        {
+          "month": "JANUARY",
+          "revenue": 0
+        },
+        {
+          "month": "FEBRUARY",
+          "revenue": 0
+        },
+        {
+          "month": "MARCH",
+          "revenue": 0
+        },
+        {
+          "month": "APRIL",
+          "revenue": 0
+        },
+        {
+          "month": "MAY",
+          "revenue": 0
+        },
+        {
+          "month": "JUNE",
+          "revenue": 2175000
+        },
+        {
+          "month": "JULY",
+          "revenue": 34338000
+        },
+        {
+          "month": "AUGUST",
+          "revenue": 0
+        },
+        {
+          "month": "SEPTEMBER",
+          "revenue": 0
+        },
+        {
+          "month": "OCTOBER",
+          "revenue": 0
+        },
+        {
+          "month": "NOVEMBER",
+          "revenue": 0
+        },
+        {
+          "month": "DECEMBER",
+          "revenue": 0
+        }
+      ]
+    }
+  }
+}

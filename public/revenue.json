@@ -1,0 +1,149 @@
+{
+  "data": {
+    "filterYear": 2025,
+    "totalRevenueForYear": 36513000,
+    "currentMonthRevenue": 34338000,
+    "revenueGrowthRatePercentage": 1478.76,
+    "quarterlyRevenueChart": {
+      "dataPoints": [
+        {
+          "month": "JANUARY",
+          "year": 2025,
+          "revenue": 0
+        },
+        {
+          "month": "FEBRUARY",
+          "year": 2025,
+          "revenue": 0
+        },
+        {
+          "month": "MARCH",
+          "year": 2025,
+          "revenue": 0
+        },
+        {
+          "month": "APRIL",
+          "year": 2025,
+          "revenue": 0
+        },
+        {
+          "month": "MAY",
+          "year": 2025,
+          "revenue": 0
+        },
+        {
+          "month": "JUNE",
+          "year": 2025,
+          "revenue": 2175000
+        },
+        {
+          "month": "JULY",
+          "year": 2025,
+          "revenue": 34338000
+        },
+        {
+          "month": "AUGUST",
+          "year": 2025,
+          "revenue": 0
+        },
+        {
+          "month": "SEPTEMBER",
+          "year": 2025,
+          "revenue": 0
+        },
+        {
+          "month": "OCTOBER",
+          "year": 2025,
+          "revenue": 0
+        },
+        {
+          "month": "NOVEMBER",
+          "year": 2025,
+          "revenue": 0
+        },
+        {
+          "month": "DECEMBER",
+          "year": 2025,
+          "revenue": 0
+        }
+      ]
+    },
+    "monthlyGrowthRateChart": {
+      "dataPoints": [
+        {
+          "month": "JANUARY",
+          "value": 0
+        },
+        {
+          "month": "FEBRUARY",
+          "value": 0
+        },
+        {
+          "month": "MARCH",
+          "value": 0
+        },
+        {
+          "month": "APRIL",
+          "value": 0
+        },
+        {
+          "month": "MAY",
+          "value": 0
+        },
+        {
+          "month": "JUNE",
+          "value": 100.0
+        },
+        {
+          "month": "JULY",
+          "value": 1478.76
+        },
+        {
+          "month": "AUGUST",
+          "value": -100.0
+        },
+        {
+          "month": "SEPTEMBER",
+          "value": 0
+        },
+        {
+          "month": "OCTOBER",
+          "value": 0
+        },
+        {
+          "month": "NOVEMBER",
+          "value": 0
+        },
+        {
+          "month": "DECEMBER",
+          "value": 0
+        }
+      ]
+    },
+    "soldPlansPercentageChart": {
+      "dataPoints": [
+        {
+          "packageName": "Gói Cao Cấp",
+          "packageId": "2fe046d5-ce1e-4059-9c85-8f86376ebd62",
+          "percentage": 62.5,
+          "pricingOptionInterval": "MONTHLY",
+          "count": 35
+        },
+        {
+          "packageName": "Gói Cao Cấp",
+          "packageId": "2fe046d5-ce1e-4059-9c85-8f86376ebd62",
+          "percentage": 8.928571428571429,
+          "pricingOptionInterval": "YEARLY",
+          "count": 5
+        },
+        {
+          "packageName": "Gói Cao Cấp",
+          "packageId": "2fe046d5-ce1e-4059-9c85-8f86376ebd62",
+          "percentage": 28.57142857142857,
+          "pricingOptionInterval": "QUARTERLY",
+          "count": 16
+        }
+      ]
+    }
+  }
+}
