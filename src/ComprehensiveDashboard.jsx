@@ -17,7 +17,7 @@ import {
   ResponsiveContainer,
 } from "recharts"
 
-// --- HÀM HỖ TRỢ AN TOÀN ---
+// --- SAFE HELPER FUNCTIONS ---
 const parseDurationToSeconds = (durationStr) => {
   if (typeof durationStr !== "string") return 0
   const match = durationStr.match(/(\d+)\s*phút\s*(\d+)\s*giây/)
@@ -29,14 +29,13 @@ const parsePercentage = (percentageStr) => {
   return parseFloat(percentageStr.replace("%", "")) || 0
 }
 
-// Định dạng số thành tiền tệ
+// Format number to currency
 const formatCurrency = (value) => {
   if (typeof value !== "number") return "0 ₫"
   return `${value.toLocaleString("vi-VN")} ₫`
 }
 
 const ComprehensiveDashboard = () => {
-  // --- STATE ---
   const [excelData, setExcelData] = useState(null)
   const [statisticApiData, setStatisticApiData] = useState(null)
   const [revenueApiData, setRevenueApiData] = useState(null)
@@ -45,7 +44,6 @@ const ComprehensiveDashboard = () => {
 
   useEffect(() => {
     const fetchAllData = async () => {
-      // Sử dụng Promise.allSettled để không bị dừng lại nếu một API lỗi
       const results = await Promise.allSettled([
         fetch("/data.xlsx"),
         fetch("/statistic.json"),
@@ -54,7 +52,6 @@ const ComprehensiveDashboard = () => {
 
       const newErrors = []
 
-      // Xử lý Excel
       if (results[0].status === "fulfilled" && results[0].value.ok) {
         const excelResponse = results[0].value
         const arrayBuffer = await excelResponse.arrayBuffer()
@@ -63,23 +60,21 @@ const ComprehensiveDashboard = () => {
         const rawData = XLSX.utils.sheet_to_json(ws, { header: 1, raw: false })
         processExcelData(rawData)
       } else {
-        newErrors.push("Không thể tải dữ liệu từ file Excel.")
+        newErrors.push("Failed to load Excel data.")
       }
 
-      // Xử lý API /statistic
       if (results[1].status === "fulfilled" && results[1].value.ok) {
         const statisticJson = await results[1].value.json()
         setStatisticApiData(statisticJson.data)
       } else {
-        newErrors.push("Không thể tải dữ liệu thống kê")
+        newErrors.push("Failed to load statistics data.")
       }
 
-      // Xử lý API /revenue
       if (results[2].status === "fulfilled" && results[2].value.ok) {
         const revenueJson = await results[2].value.json()
         setRevenueApiData(revenueJson.data)
       } else {
-        newErrors.push("Không thể tải dữ liệu doanh thu")
+        newErrors.push("Failed to load revenue data.")
       }
 
       if (newErrors.length > 0) setErrors(newErrors)
@@ -124,21 +119,19 @@ const ComprehensiveDashboard = () => {
 
   const PIE_COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"]
 
-  // Xử lý dữ liệu cho biểu đồ kết hợp (Composed Chart)
   const combinedGrowthData =
     statisticApiData?.userGrowthOverTime.dataPoints.map((userPoint, index) => ({
       ...userPoint,
       revenue: statisticApiData.totalRevenue.dataPoints[index]?.revenue || 0,
     }))
 
-  if (loading)
-    return <div className="status-message">Đang tải toàn bộ dữ liệu...</div>
+  if (loading) return <div className="status-message">Loading all data...</div>
 
   return (
     <div className="full-dashboard">
       {errors.length > 0 && (
         <div className="analytics-container error-container">
-          <h2 className="chart-title error-title">Thông báo lỗi</h2>
+          <h2 className="chart-title error-title">Error Notifications</h2>
           <ul>
             {errors.map((err, index) => (
               <li key={index}>{err}</li>
@@ -147,26 +140,26 @@ const ComprehensiveDashboard = () => {
         </div>
       )}
 
-      {/* --- KHU VỰC BÁO CÁO HỆ THỐNG (API) --- */}
-      <div className="section-title">BÁO CÁO TỪ HỆ THỐNG</div>
+      {/* --- SYSTEM REPORT SECTION --- */}
+      <div className="section-title">SYSTEM REPORT</div>
 
       {/* KPI Cards */}
       {statisticApiData && revenueApiData && (
         <div className="kpi-grid">
           <div className="kpi-card">
-            <h3>Tổng Doanh Thu ({statisticApiData.filterYear})</h3>
+            <h3>Total Revenue ({statisticApiData.filterYear})</h3>
             <p>{formatCurrency(revenueApiData.totalRevenueForYear)}</p>
           </div>
           <div className="kpi-card">
-            <h3>Tổng Người Dùng</h3>
+            <h3>Total Users</h3>
             <p>{statisticApiData.totalUsers.toLocaleString("vi-VN")}</p>
           </div>
           <div className="kpi-card">
-            <h3>Doanh Thu Tháng Này</h3>
+            <h3>This Month's Revenue</h3>
             <p>{formatCurrency(revenueApiData.currentMonthRevenue)}</p>
           </div>
           <div className="kpi-card">
-            <h3>Tăng Trưởng Tháng Này</h3>
+            <h3>Monthly Growth</h3>
             <p>{revenueApiData.revenueGrowthRatePercentage.toFixed(2)}%</p>
           </div>
         </div>
@@ -175,7 +168,7 @@ const ComprehensiveDashboard = () => {
       <div className="column-charts-area">
         {statisticApiData ? (
           <div className="analytics-container">
-            <h2 className="chart-title">Tăng Trưởng Người Dùng & Doanh Thu</h2>
+            <h2 className="chart-title">User Growth & Revenue</h2>
             <ResponsiveContainer width="100%" height={350}>
               <ComposedChart data={combinedGrowthData}>
                 <CartesianGrid strokeDasharray="3 3" />
@@ -183,7 +176,7 @@ const ComprehensiveDashboard = () => {
                 <YAxis
                   yAxisId="left"
                   label={{
-                    value: "Doanh thu",
+                    value: "Revenue",
                     angle: -90,
                     position: "insideLeft",
                   }}
@@ -193,14 +186,14 @@ const ComprehensiveDashboard = () => {
                   yAxisId="right"
                   orientation="right"
                   label={{
-                    value: "Người dùng",
+                    value: "Users",
                     angle: -90,
                     position: "insideRight",
                   }}
                 />
                 <Tooltip
                   formatter={(value, name) =>
-                    name === "Doanh thu"
+                    name === "Revenue"
                       ? formatCurrency(value)
                       : value.toLocaleString("vi-VN")
                   }
@@ -209,14 +202,14 @@ const ComprehensiveDashboard = () => {
                 <Bar
                   dataKey="revenue"
                   yAxisId="left"
-                  name="Doanh thu"
+                  name="Revenue"
                   fill="#8884d8"
                 />
                 <Line
                   type="monotone"
                   dataKey="totalUsers"
                   yAxisId="right"
-                  name="Người dùng"
+                  name="Users"
                   stroke="#ff7300"
                 />
               </ComposedChart>
@@ -224,13 +217,13 @@ const ComprehensiveDashboard = () => {
           </div>
         ) : (
           <div className="analytics-container status-message">
-            Không có dữ liệu thống kê.
+            No statistic data available.
           </div>
         )}
 
         {revenueApiData ? (
           <div className="analytics-container">
-            <h2 className="chart-title">Tỉ lệ Các Gói Bán</h2>
+            <h2 className="chart-title">Package Sales Ratio</h2>
             <ResponsiveContainer width="100%" height={350}>
               <PieChart>
                 <Pie
@@ -256,7 +249,7 @@ const ComprehensiveDashboard = () => {
                 <Tooltip
                   formatter={(value, name, props) => [
                     `${value.toFixed(2)}%`,
-                    `Tỉ lệ`,
+                    `Percentage`,
                   ]}
                 />
                 <Legend />
@@ -265,17 +258,17 @@ const ComprehensiveDashboard = () => {
           </div>
         ) : (
           <div className="analytics-container status-message">
-            Không có dữ liệu doanh thu.
+            No revenue data available.
           </div>
         )}
       </div>
 
-      {/* --- KHU VỰC BÁO CÁO TỪ FILE EXCEL --- */}
-      <div className="section-title">BÁO CÁO TỪ FILE EXCEL</div>
+      {/* --- EXCEL REPORT SECTION --- */}
+      <div className="section-title">REPORT FROM EXCEL FILE</div>
       {excelData ? (
         <>
           <div className="analytics-container">
-            <h2 className="chart-title">Theo Từng Ngày</h2>
+            <h2 className="chart-title">Daily Overview</h2>
             <ResponsiveContainer width="100%" height={400}>
               <LineChart
                 data={excelData.daily}
@@ -308,26 +301,28 @@ const ComprehensiveDashboard = () => {
           </div>
           <div className="column-charts-area">
             <div className="analytics-container">
-              <h2 className="chart-title">Tổng Quan (19/6 - 31/7)</h2>
+              <h2 className="chart-title">Overview (June 19 - July 31)</h2>
               <ResponsiveContainer width="100%" height={350}>
                 <BarChart data={excelData.overview}>
                   <CartesianGrid strokeDasharray="3 3" />
                   <XAxis dataKey="metric" />
                   <YAxis />
                   <Tooltip />
-                  <Bar dataKey="value" name="Giá trị" fill="#8884d8" />
+                  <Bar dataKey="value" name="Value" fill="#8884d8" />
                 </BarChart>
               </ResponsiveContainer>
             </div>
             <div className="analytics-container">
-              <h2 className="chart-title">Chỉ Số Chuyển Đổi (19/6 - 31/7)</h2>
+              <h2 className="chart-title">
+                Conversion Metrics (June 19 - July 31)
+              </h2>
               <ResponsiveContainer width="100%" height={350}>
                 <BarChart data={excelData.conversion}>
                   <CartesianGrid strokeDasharray="3 3" />
                   <XAxis dataKey="metric" />
                   <YAxis />
                   <Tooltip />
-                  <Bar dataKey="value" name="Giá trị" fill="#ff7300" />
+                  <Bar dataKey="value" name="Value" fill="#ff7300" />
                 </BarChart>
               </ResponsiveContainer>
             </div>
@@ -335,7 +330,7 @@ const ComprehensiveDashboard = () => {
         </>
       ) : (
         <div className="analytics-container status-message">
-          Không có dữ liệu từ file Excel.
+          No Excel data available.
         </div>
       )}
     </div>
