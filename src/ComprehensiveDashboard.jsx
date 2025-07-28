@@ -71,9 +71,7 @@ const ComprehensiveDashboard = () => {
         const statisticJson = await results[1].value.json()
         setStatisticApiData(statisticJson.data)
       } else {
-        newErrors.push(
-          "Không thể tải dữ liệu thống kê. (Kiểm tra CORS trên backend)"
-        )
+        newErrors.push("Không thể tải dữ liệu thống kê")
       }
 
       // Xử lý API /revenue
@@ -81,9 +79,7 @@ const ComprehensiveDashboard = () => {
         const revenueJson = await results[2].value.json()
         setRevenueApiData(revenueJson.data)
       } else {
-        newErrors.push(
-          "Không thể tải dữ liệu doanh thu. (Kiểm tra CORS trên backend)"
-        )
+        newErrors.push("Không thể tải dữ liệu doanh thu")
       }
 
       if (newErrors.length > 0) setErrors(newErrors)
